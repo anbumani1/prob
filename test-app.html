@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Intern Portal - Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-section { margin: 20px 0; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        .success { background-color: #d4edda; border-color: #c3e6cb; }
+        .error { background-color: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 15px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🚀 Intern Portal - Application Test</h1>
+    
+    <div class="test-section">
+        <h2>📱 UI5 Application</h2>
+        <p>Click the button below to open the main UI5 application:</p>
+        <button onclick="window.open('/app/webapp/index.html', '_blank')">Open UI5 App</button>
+    </div>
+
+    <div class="test-section">
+        <h2>🔗 API Endpoints Test</h2>
+        <button onclick="testCompanyPolicy()">Test Company Policy API</button>
+        <button onclick="testChatHistory()">Test Chat History API</button>
+        <div id="api-results"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>📋 Login Information</h2>
+        <p><strong>Username:</strong> intern</p>
+        <p><strong>Password:</strong> welcome</p>
+    </div>
+
+    <div class="test-section">
+        <h2>🎯 Application Features</h2>
+        <ul>
+            <li>✅ Login System with authentication</li>
+            <li>✅ Welcome Dashboard with navigation</li>
+            <li>✅ Company Policy Viewer with detailed content</li>
+            <li>✅ Interactive Chat History with bot responses</li>
+            <li>✅ Responsive UI5 design</li>
+            <li>✅ OData V4 service integration</li>
+        </ul>
+    </div>
+
+    <script>
+        async function testCompanyPolicy() {
+            const resultsDiv = document.getElementById('api-results');
+            try {
+                const response = await fetch('/odata/v4/OnboardingService/CompanyPolicy');
+                const data = await response.json();
+                resultsDiv.innerHTML = `
+                    <div class="test-section success">
+                        <h3>✅ Company Policy API - Success</h3>
+                        <p>Found ${data.value.length} policies</p>
+                        <pre>${JSON.stringify(data.value[0], null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="test-section error">
+                        <h3>❌ Company Policy API - Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+
+        async function testChatHistory() {
+            const resultsDiv = document.getElementById('api-results');
+            try {
+                const response = await fetch('/odata/v4/OnboardingService/ChatHistory');
+                const data = await response.json();
+                resultsDiv.innerHTML = `
+                    <div class="test-section success">
+                        <h3>✅ Chat History API - Success</h3>
+                        <p>Found ${data.value.length} chat messages</p>
+                        <pre>${JSON.stringify(data.value[0], null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultsDiv.innerHTML = `
+                    <div class="test-section error">
+                        <h3>❌ Chat History API - Error</h3>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+            }
+        }
+    </script>
+</body>
+</html>

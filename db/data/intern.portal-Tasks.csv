@@ -1,0 +1,4 @@
+ID,activity,category,priority,status,date,time,intern_ID
+550e8400-e29b-41d4-a716-446655440011,"HR Documentation & Onboarding","Training","High","Completed",2024-01-16,120,550e8400-e29b-41d4-a716-446655440001
+550e8400-e29b-41d4-a716-446655440012,"SAP BTP Fundamentals Training","Learning","High","InProgress",2024-01-29,240,550e8400-e29b-41d4-a716-446655440001
+550e8400-e29b-41d4-a716-446655440013,"Team Introduction Meeting","Meeting","Medium","Planned",2024-01-22,0,550e8400-e29b-41d4-a716-446655440002

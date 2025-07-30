@@ -1,0 +1,60 @@
+<mvc:View
+    controllerName="intern.portal.controller.Welcome"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <Page id="welcomePage" title="{i18n>welcomeTitle}" showNavButton="false">
+        <headerContent>
+            <Button id="logoutButton" 
+                    text="{i18n>logoutButton}" 
+                    type="Transparent" 
+                    press="onLogout"/>
+        </headerContent>
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <Title text="{i18n>welcomeTitle}" level="H1" class="sapUiLargeMarginBottom"/>
+                <Text text="{i18n>welcomeMessage}" class="sapUiMediumMarginBottom"/>
+                
+                <Panel headerText="{i18n>navigationTitle}" class="sapUiLargeMarginTop">
+                    <content>
+                        <VBox class="sapUiMediumMargin">
+                            <Button id="policiesButton" 
+                                    text="{i18n>viewPoliciesButton}" 
+                                    type="Emphasized" 
+                                    width="300px"
+                                    press="onNavigateToPolicy"
+                                    class="sapUiSmallMarginBottom"/>
+                            
+                            <Button id="chatButton" 
+                                    text="{i18n>chatHistoryButton}" 
+                                    type="Default" 
+                                    width="300px"
+                                    press="onNavigateToChat"
+                                    class="sapUiSmallMarginBottom"/>
+                        </VBox>
+                    </content>
+                </Panel>
+                
+                <!-- Quick Stats Panel -->
+                <Panel headerText="Your Progress" class="sapUiLargeMarginTop">
+                    <content>
+                        <HBox class="sapUiMediumMargin" justifyContent="SpaceAround">
+                            <VBox alignItems="Center">
+                                <Title text="{/tasksCompleted}" level="H2"/>
+                                <Text text="Tasks Completed"/>
+                            </VBox>
+                            <VBox alignItems="Center">
+                                <Title text="{/policiesRead}" level="H2"/>
+                                <Text text="Policies Read"/>
+                            </VBox>
+                            <VBox alignItems="Center">
+                                <Title text="{/daysRemaining}" level="H2"/>
+                                <Text text="Days Remaining"/>
+                            </VBox>
+                        </HBox>
+                    </content>
+                </Panel>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

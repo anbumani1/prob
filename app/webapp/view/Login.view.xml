@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="intern.portal.controller.Login"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
+    xmlns="sap.m">
+    <App id="app">
+        <pages>
+            <Page id="loginPage" title="{i18n>loginTitle}" showNavButton="false">
+                <content>
+                    <VBox class="sapUiMediumMargin" alignItems="Center" justifyContent="Center">
+                        <Title text="{i18n>loginTitle}" level="H1" class="sapUiLargeMarginBottom"/>
+                        <Text text="{i18n>loginSubtitle}" class="sapUiMediumMarginBottom"/>
+                        
+                        <VBox width="300px" class="sapUiMediumMargin">
+                            <Label text="{i18n>usernameLabel}" class="sapUiSmallMarginBottom"/>
+                            <Input id="usernameInput" 
+                                   value="{/username}" 
+                                   placeholder="{i18n>usernameLabel}"
+                                   class="sapUiMediumMarginBottom"/>
+                            
+                            <Label text="{i18n>passwordLabel}" class="sapUiSmallMarginBottom"/>
+                            <Input id="passwordInput" 
+                                   type="Password"
+                                   value="{/password}" 
+                                   placeholder="{i18n>passwordLabel}"
+                                   class="sapUiMediumMarginBottom"/>
+                            
+                            <Button id="loginButton" 
+                                    text="{i18n>loginButton}" 
+                                    type="Emphasized" 
+                                    width="100%"
+                                    press="onLogin"
+                                    class="sapUiMediumMarginTop"/>
+                            
+                            <MessageStrip id="loginMessage" 
+                                         visible="false" 
+                                         type="Error" 
+                                         text="{i18n>loginError}"
+                                         class="sapUiMediumMarginTop"/>
+                        </VBox>
+                    </VBox>
+                </content>
+            </Page>
+        </pages>
+    </App>
+</mvc:View>

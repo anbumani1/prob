@@ -1,0 +1,26 @@
+{
+  "name": "intern-onboarding-portal",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "cds watch",
+    "build": "cds build",
+    "deploy": "cds deploy"
+  },
+  "dependencies": {
+    "@sap/cds": "^8",
+    "@sap/cds-dk": "^8"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^8"
+  },
+  "cds": {
+    "requires": {
+      "db": {
+        "kind": "sqlite",
+        "credentials": {
+          "url": ":memory:"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "_version": "1.49.0",
+  "sap.app": {
+    "id": "intern.portal",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": false,
+    "dependencies": {
+      "minUI5Version": "1.60.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.ui.layout": {},
+        "sap.ushell": {},
+        "sap.collaboration": {},
+        "sap.ui.comp": {},
+        "sap.uxap": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "dataSource": "i18n",
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "intern.portal.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "settings": {
+          "synchronizationMode": "None",
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      }
+    }
+  },
+  "sap.app/dataSources": {
+    "mainService": {
+      "uri": "/odata/v4/OnboardingService/",
+      "type": "OData",
+      "settings": {
+        "annotations": [],
+        "odataVersion": "4.0"
+      }
+    },
+    "i18n": {
+      "type": "sap.ui.model.resource.ResourceModel",
+      "uri": "i18n/i18n.properties"
+    }
+  },
+  "sap.ui5/routing": {
+    "config": {
+      "routerClass": "sap.m.routing.Router",
+      "viewType": "XML",
+      "async": true,
+      "viewPath": "intern.portal.view",
+      "controlAggregation": "pages",
+      "controlId": "app",
+      "clearControlAggregation": false
+    },
+    "routes": [
+      {
+        "name": "RouteLogin",
+        "pattern": "",
+        "target": ["TargetLogin"]
+      },
+      {
+        "name": "RouteWelcome",
+        "pattern": "welcome",
+        "target": ["TargetWelcome"]
+      },
+      {
+        "name": "RouteCompanyPolicy",
+        "pattern": "policy",
+        "target": ["TargetCompanyPolicy"]
+      },
+      {
+        "name": "RouteChatHistory",
+        "pattern": "chat",
+        "target": ["TargetChatHistory"]
+      }
+    ],
+    "targets": {
+      "TargetLogin": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": false,
+        "viewId": "Login",
+        "viewName": "Login"
+      },
+      "TargetWelcome": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": false,
+        "viewId": "Welcome",
+        "viewName": "Welcome"
+      },
+      "TargetCompanyPolicy": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": false,
+        "viewId": "CompanyPolicy",
+        "viewName": "CompanyPolicy"
+      },
+      "TargetChatHistory": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": false,
+        "viewId": "ChatHistory",
+        "viewName": "ChatHistory"
+      }
+    }
+  }
+}
