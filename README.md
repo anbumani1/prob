@@ -40,10 +40,11 @@ A comprehensive intern onboarding portal built with SAP CAP (Cloud Application P
 - **Company Policy Viewer**: Browse and read company policies
 - **Chat History**: Interactive chat interface with bot responses
 
-### Backend (SAP CAP)
+### Backend (SAP CAP + AI Integration)
 - **OData V4 Service**: RESTful API for data access
 - **Entity Models**: Interns, Tasks, CompanyPolicy, ChatHistory
 - **Sample Data**: Pre-populated CSV data for testing
+- **AI Chatbot**: OpenAI-powered intelligent assistant for intern support
 
 ## Getting Started
 

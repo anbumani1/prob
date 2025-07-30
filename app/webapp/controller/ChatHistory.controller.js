@@ -51,62 +51,71 @@ sap.ui.define([
         onSendMessage: function () {
             var oChatModel = this.getView().getModel("chat");
             var sMessage = oChatModel.getProperty("/newMessage");
-            
+
             if (!sMessage || sMessage.trim() === "") {
                 MessageToast.show("Please enter a message");
                 return;
             }
-            
-            // Get current user
-            var sUserName = sessionStorage.getItem("username") || "User";
-            
-            // Create new chat entry
+
+            // Clear input immediately and show loading
+            oChatModel.setProperty("/newMessage", "");
+            MessageToast.show("Sending message...");
+
+            // Send message to AI API
+            this._sendToAI(sMessage.trim());
+        },
+
+        _sendToAI: function (sMessage) {
+            var that = this;
+
+            // Call AI API
+            fetch('/api/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: sMessage
+                })
+            })
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(data) {
+                // Refresh chat history to show new message
+                that._loadChatHistory();
+                MessageToast.show("Message sent successfully!");
+            })
+            .catch(function(error) {
+                console.error('Error:', error);
+                MessageToast.show("Error sending message. Please try again.");
+
+                // Fallback: create local entry
+                that._createFallbackMessage(sMessage);
+            });
+        },
+
+        _createFallbackMessage: function (sMessage) {
             var oNewChat = {
                 ID: this._generateUUID(),
-                userMessage: sMessage.trim(),
-                botReply: this._generateBotResponse(sMessage.trim()),
+                userMessage: sMessage,
+                botReply: "I'm here to help with your onboarding questions! You can ask me about company policies, training requirements, or navigate to different sections of the portal.",
                 timestamp: new Date().toISOString()
             };
-            
-            // Add to OData model (in real app, this would be a POST request)
+
+            // Add to OData model
             var oModel = this.getOwnerComponent().getModel();
             var oBinding = oModel.bindList("/ChatHistory");
-            
+
             try {
                 oBinding.create(oNewChat);
-                
-                // Clear input
-                oChatModel.setProperty("/newMessage", "");
-                
-                // Scroll to bottom after a short delay
-                setTimeout(this._scrollToBottom.bind(this), 100);
-                
+                this._scrollToBottom();
             } catch (error) {
-                MessageToast.show("Error sending message: " + error.message);
+                MessageToast.show("Error creating message: " + error.message);
             }
         },
 
-        _generateBotResponse: function (sMessage) {
-            // Simple bot responses (in real app, this would be AI-powered)
-            var aResponses = [
-                "Thank you for your message. How can I help you with your onboarding?",
-                "I understand your question. Let me provide you with the relevant information.",
-                "That's a great question! Here's what you need to know...",
-                "I'm here to help you with your internship journey. What else would you like to know?",
-                "Based on your question, I recommend checking our company policies section."
-            ];
-            
-            // Simple keyword-based responses
-            if (sMessage.toLowerCase().includes("policy")) {
-                return "You can find all company policies in the Company Policy section. Would you like me to guide you there?";
-            } else if (sMessage.toLowerCase().includes("help")) {
-                return "I'm here to help! You can ask me about company policies, onboarding tasks, or any other questions about your internship.";
-            } else if (sMessage.toLowerCase().includes("task")) {
-                return "Your current tasks are available in your dashboard. You've completed 5 tasks so far. Keep up the great work!";
-            }
-            
-            return aResponses[Math.floor(Math.random() * aResponses.length)];
-        },
+
 
         _generateUUID: function () {
             return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
