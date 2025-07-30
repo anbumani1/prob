@@ -9,7 +9,8 @@
     "start:cds": "cds watch",
     "start:db": "node database-server.js",
     "build": "echo 'Backend-only setup - no build needed'",
-    "deploy": "cds deploy",
+    "deploy": "cds deploy --to sqlite:db/intern-portal.db",
+    "deploy:memory": "cds deploy",
     "dev": "NODE_ENV=development node server-with-env.js",
     "prod": "NODE_ENV=production node server-with-env.js",
     "health": "curl http://localhost:4004/health",
@@ -33,9 +34,12 @@
       "db": {
         "kind": "sqlite",
         "credentials": {
-          "url": ":memory:"
+          "url": "db/intern-portal.db"
         }
       }
+    },
+    "sqlite": {
+      "deploy-format": "sql"
     }
   }
 }
