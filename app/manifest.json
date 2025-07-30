@@ -81,8 +81,9 @@
       "async": true,
       "viewPath": "intern.portal.view",
       "controlAggregation": "pages",
-      "controlId": "app",
-      "clearControlAggregation": false
+      "controlId": "navContainer",
+      "clearControlAggregation": false,
+      "transition": "slide"
     },
     "routes": [
       {
@@ -93,47 +94,74 @@
       {
         "name": "RouteWelcome",
         "pattern": "welcome",
-        "target": ["TargetWelcome"]
+        "target": ["TargetShell", "TargetWelcome"]
       },
       {
         "name": "RouteCompanyPolicy",
         "pattern": "policy",
-        "target": ["TargetCompanyPolicy"]
+        "target": ["TargetShell", "TargetCompanyPolicy"]
       },
       {
         "name": "RouteChatHistory",
         "pattern": "chat",
-        "target": ["TargetChatHistory"]
+        "target": ["TargetShell", "TargetChatHistory"]
+      },
+      {
+        "name": "RouteTasks",
+        "pattern": "tasks",
+        "target": ["TargetShell", "TargetTasks"]
       }
     ],
     "targets": {
       "TargetLogin": {
         "viewType": "XML",
         "transition": "slide",
-        "clearControlAggregation": false,
+        "clearControlAggregation": true,
         "viewId": "Login",
-        "viewName": "Login"
+        "viewName": "Login",
+        "controlId": "app",
+        "controlAggregation": "pages"
+      },
+      "TargetShell": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": true,
+        "viewId": "Shell",
+        "viewName": "Shell",
+        "controlId": "app",
+        "controlAggregation": "pages"
       },
       "TargetWelcome": {
         "viewType": "XML",
         "transition": "slide",
         "clearControlAggregation": false,
         "viewId": "Welcome",
-        "viewName": "Welcome"
+        "viewName": "Welcome",
+        "parent": "TargetShell"
       },
       "TargetCompanyPolicy": {
         "viewType": "XML",
         "transition": "slide",
         "clearControlAggregation": false,
         "viewId": "CompanyPolicy",
-        "viewName": "CompanyPolicy"
+        "viewName": "CompanyPolicy",
+        "parent": "TargetShell"
       },
       "TargetChatHistory": {
         "viewType": "XML",
         "transition": "slide",
         "clearControlAggregation": false,
         "viewId": "ChatHistory",
-        "viewName": "ChatHistory"
+        "viewName": "ChatHistory",
+        "parent": "TargetShell"
+      },
+      "TargetTasks": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": false,
+        "viewId": "Tasks",
+        "viewName": "Tasks",
+        "parent": "TargetShell"
       }
     }
   }

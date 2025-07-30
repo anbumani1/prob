@@ -1,0 +1,179 @@
+<mvc:View
+    controllerName="intern.portal.controller.Shell"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+    
+    <f:ShellBar
+        id="shellBar"
+        title="Intern Portal"
+        homeIcon="sap-icon://home"
+        homeIconPressed="onHomePress"
+        showCopilot="false"
+        showSearch="true"
+        showNotifications="true"
+        showProductSwitcher="false"
+        notificationsNumber="{appState>/unreadNotifications}"
+        searchButtonPressed="onSearchPress"
+        notificationsPressed="onNotificationsPress"
+        class="intern-portal-header">
+        
+        <f:profile>
+            <f:Avatar
+                src="{user>/avatar}"
+                displaySize="S"
+                initials="{user>/name}"
+                press="onAvatarPress"/>
+        </f:profile>
+        
+        <f:additionalContent>
+            <Button
+                icon="sap-icon://log"
+                tooltip="Logout"
+                press="onLogout"
+                type="Transparent"/>
+        </f:additionalContent>
+    </f:ShellBar>
+    
+    <f:DynamicPage
+        id="dynamicPage"
+        headerExpanded="true"
+        showFooter="true">
+        
+        <f:title>
+            <f:DynamicPageTitle>
+                <f:heading>
+                    <Title text="{appState>/currentView}" level="H1"/>
+                </f:heading>
+                
+                <f:breadcrumbs>
+                    <Breadcrumbs currentLocationText="{appState>/currentView}">
+                        <Link text="Home" press="onBreadcrumbPress"/>
+                    </Breadcrumbs>
+                </f:breadcrumbs>
+                
+                <f:actions>
+                    <Button
+                        text="Help"
+                        icon="sap-icon://sys-help"
+                        press="onHelpPress"
+                        type="Transparent"/>
+                    <Button
+                        text="Settings"
+                        icon="sap-icon://action-settings"
+                        press="onSettingsPress"
+                        type="Transparent"/>
+                </f:actions>
+            </f:DynamicPageTitle>
+        </f:title>
+        
+        <f:header>
+            <f:DynamicPageHeader pinnable="true">
+                <f:content>
+                    <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiMediumMargin">
+                        <VBox>
+                            <Text text="Welcome back, {user>/name}!" class="sapUiLargeText"/>
+                            <Text text="{user>/department} • {user>/role}" class="sapUiMediumText"/>
+                        </VBox>
+                        
+                        <HBox alignItems="Center">
+                            <f:Avatar
+                                src="{user>/avatar}"
+                                displaySize="M"
+                                initials="{user>/name}"
+                                class="sapUiMediumMarginEnd"/>
+                            
+                            <VBox alignItems="End">
+                                <Text text="Progress: {user>/stats/progressPercentage}%" class="sapUiMediumText"/>
+                                <ProgressIndicator
+                                    percentValue="{user>/stats/progressPercentage}"
+                                    width="150px"
+                                    state="Success"/>
+                            </VBox>
+                        </HBox>
+                    </HBox>
+                </f:content>
+            </f:DynamicPageHeader>
+        </f:header>
+        
+        <f:content>
+            <NavContainer
+                id="navContainer"
+                height="100%"
+                defaultTransitionName="slide">
+            </NavContainer>
+        </f:content>
+        
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer/>
+                <Text text="© 2025 Intern Portal • Powered by SAP UI5" class="sapUiTinyText"/>
+                <ToolbarSpacer/>
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+    
+    <!-- Notifications Popover -->
+    <Popover
+        id="notificationsPopover"
+        title="Notifications"
+        placement="Bottom"
+        contentWidth="350px"
+        contentHeight="400px">
+        <content>
+            <List
+                items="{appState>/notifications}"
+                noDataText="No notifications">
+                <StandardListItem
+                    title="{title}"
+                    description="{description}"
+                    info="{timestamp}"
+                    icon="{icon}"
+                    iconInset="false"
+                    type="Active"
+                    press="onNotificationPress"/>
+            </List>
+        </content>
+        <footer>
+            <Toolbar>
+                <ToolbarSpacer/>
+                <Button text="Clear All" press="onClearNotifications"/>
+            </Toolbar>
+        </footer>
+    </Popover>
+    
+    <!-- Search Dialog -->
+    <Dialog
+        id="searchDialog"
+        title="Search Portal"
+        contentWidth="500px"
+        contentHeight="400px">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <SearchField
+                    id="searchField"
+                    placeholder="Search for policies, tasks, or help topics..."
+                    width="100%"
+                    search="onSearch"/>
+                
+                <List
+                    id="searchResults"
+                    items="{/searchResults}"
+                    visible="false"
+                    class="sapUiMediumMarginTop">
+                    <StandardListItem
+                        title="{title}"
+                        description="{description}"
+                        icon="{icon}"
+                        type="Active"
+                        press="onSearchResultPress"/>
+                </List>
+            </VBox>
+        </content>
+        <buttons>
+            <Button text="Close" press="onCloseSearchDialog"/>
+        </buttons>
+    </Dialog>
+</mvc:View>

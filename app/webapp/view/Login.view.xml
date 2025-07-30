@@ -1,43 +1,88 @@
 <mvc:View
     controllerName="intern.portal.controller.Login"
     xmlns:mvc="sap.ui.core.mvc"
-    displayBlock="true"
-    xmlns="sap.m">
-    <App id="app">
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+
+    <App id="app" class="sapUiSizeCompact">
         <pages>
-            <Page id="loginPage" title="{i18n>loginTitle}" showNavButton="false">
+            <Page id="loginPage" showNavButton="false" enableScrolling="false">
                 <content>
-                    <VBox class="sapUiMediumMargin" alignItems="Center" justifyContent="Center">
-                        <Title text="{i18n>loginTitle}" level="H1" class="sapUiLargeMarginBottom"/>
-                        <Text text="{i18n>loginSubtitle}" class="sapUiMediumMarginBottom"/>
-                        
-                        <VBox width="300px" class="sapUiMediumMargin">
-                            <Label text="{i18n>usernameLabel}" class="sapUiSmallMarginBottom"/>
-                            <Input id="usernameInput" 
-                                   value="{/username}" 
-                                   placeholder="{i18n>usernameLabel}"
-                                   class="sapUiMediumMarginBottom"/>
-                            
-                            <Label text="{i18n>passwordLabel}" class="sapUiSmallMarginBottom"/>
-                            <Input id="passwordInput" 
-                                   type="Password"
-                                   value="{/password}" 
-                                   placeholder="{i18n>passwordLabel}"
-                                   class="sapUiMediumMarginBottom"/>
-                            
-                            <Button id="loginButton" 
-                                    text="{i18n>loginButton}" 
-                                    type="Emphasized" 
-                                    width="100%"
-                                    press="onLogin"
-                                    class="sapUiMediumMarginTop"/>
-                            
-                            <MessageStrip id="loginMessage" 
-                                         visible="false" 
-                                         type="Error" 
-                                         text="{i18n>loginError}"
-                                         class="sapUiMediumMarginTop"/>
+                    <VBox height="100vh" alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+
+                        <!-- Login Card -->
+                        <VBox width="400px" class="sapUiLargeMargin">
+
+                            <!-- Header Section -->
+                            <VBox alignItems="Center" class="sapUiLargeMarginBottom">
+                                <core:Icon src="sap-icon://building" size="4rem" color="#0070f2" class="sapUiMediumMarginBottom"/>
+                                <Title text="{i18n>loginTitle}" level="H1" textAlign="Center"/>
+                                <Text text="{i18n>loginSubtitle}" textAlign="Center" class="sapUiSmallMarginTop"/>
+                            </VBox>
+
+                            <!-- Login Form -->
+                            <Panel class="sapUiMediumMargin" backgroundDesign="Translucent">
+                                <content>
+                                    <VBox class="sapUiMediumMargin">
+
+                                        <!-- Username Field -->
+                                        <VBox class="sapUiMediumMarginBottom">
+                                            <Label text="{i18n>usernameLabel}" class="sapUiSmallMarginBottom"/>
+                                            <Input id="usernameInput"
+                                                   value="{/username}"
+                                                   placeholder="{i18n>usernameLabel}"
+                                                   width="100%"
+                                                   submit="onLogin"/>
+                                        </VBox>
+
+                                        <!-- Password Field -->
+                                        <VBox class="sapUiMediumMarginBottom">
+                                            <Label text="{i18n>passwordLabel}" class="sapUiSmallMarginBottom"/>
+                                            <Input id="passwordInput"
+                                                   type="Password"
+                                                   value="{/password}"
+                                                   placeholder="{i18n>passwordLabel}"
+                                                   width="100%"
+                                                   submit="onLogin"/>
+                                        </VBox>
+
+                                        <!-- Login Button -->
+                                        <Button id="loginButton"
+                                                text="{i18n>loginButton}"
+                                                type="Emphasized"
+                                                width="100%"
+                                                press="onLogin"
+                                                class="sapUiMediumMarginTop"/>
+
+                                        <!-- Error Message -->
+                                        <MessageStrip id="loginMessage"
+                                                     visible="false"
+                                                     type="Error"
+                                                     text="{i18n>loginError}"
+                                                     class="sapUiMediumMarginTop"/>
+                                    </VBox>
+                                </content>
+                            </Panel>
+
+                            <!-- Demo Credentials -->
+                            <Panel headerText="Demo Credentials" class="sapUiMediumMarginTop" backgroundDesign="Solid">
+                                <content>
+                                    <VBox class="sapUiSmallMargin">
+                                        <Text text="Username: intern" class="sapUiTinyText"/>
+                                        <Text text="Password: welcome" class="sapUiTinyText"/>
+                                    </VBox>
+                                </content>
+                            </Panel>
+
                         </VBox>
+
+                        <!-- Footer -->
+                        <VBox alignItems="Center" class="sapUiLargeMarginTop">
+                            <Text text="© 2025 Intern Portal • Powered by SAP UI5 Fiori" class="sapUiTinyText"/>
+                        </VBox>
+
                     </VBox>
                 </content>
             </Page>

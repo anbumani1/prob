@@ -41,11 +41,28 @@ sap.ui.define([
             this.getRouter().navTo("RouteChatHistory");
         },
 
+        onNavigateToTasks: function () {
+            sap.m.MessageToast.show("Tasks view - Coming soon!");
+        },
+
+        onRefreshData: function () {
+            // Simulate data refresh
+            var oUserModel = this.getOwnerComponent().getModel("user");
+            var oCurrentStats = oUserModel.getProperty("/stats");
+
+            // Update stats with slight variations
+            oCurrentStats.tasksCompleted = Math.min(oCurrentStats.tasksCompleted + 1, 10);
+            oCurrentStats.progressPercentage = Math.min(oCurrentStats.progressPercentage + 5, 100);
+
+            oUserModel.setProperty("/stats", oCurrentStats);
+            sap.m.MessageToast.show("Data refreshed successfully!");
+        },
+
         onLogout: function () {
             // Clear session
             sessionStorage.removeItem("isLoggedIn");
             sessionStorage.removeItem("username");
-            
+
             // Navigate to login
             this.getRouter().navTo("RouteLogin");
         },
