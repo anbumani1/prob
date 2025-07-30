@@ -1,0 +1,319 @@
+<mvc:View
+    controllerName="intern.portal.controller.MainApp"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:tnt="sap.tnt"
+    displayBlock="true">
+    
+    <tnt:ToolPage id="toolPage">
+        
+        <!-- Header -->
+        <tnt:header>
+            <tnt:ToolHeader>
+                <Image src="https://logos-world.net/wp-content/uploads/2021/02/SAP-Logo.png" 
+                       height="32px" 
+                       class="sapUiSmallMarginBegin"/>
+                <Title text="Intern Onboarding Portal" 
+                       level="H4" 
+                       class="sapUiMediumMarginBegin"/>
+                
+                <tnt:ToolHeaderUtilitySeparator/>
+                
+                <!-- Header Actions -->
+                <Button icon="sap-icon://refresh" 
+                        tooltip="Refresh" 
+                        type="Transparent" 
+                        press="onRefresh"/>
+                <Button icon="sap-icon://print" 
+                        tooltip="Print" 
+                        type="Transparent" 
+                        press="onPrint"/>
+                <Button icon="sap-icon://person-placeholder" 
+                        tooltip="User Profile" 
+                        type="Transparent" 
+                        press="onUserProfile"/>
+            </tnt:ToolHeader>
+        </tnt:header>
+        
+        <!-- Side Navigation -->
+        <tnt:sideContent>
+            <tnt:SideNavigation expanded="true" selectedKey="aiAssistant">
+                <tnt:NavigationList>
+                    <tnt:NavigationListItem 
+                        text="Dashboard" 
+                        icon="sap-icon://home" 
+                        key="dashboard"
+                        select="onNavigationSelect"/>
+                    
+                    <tnt:NavigationListItem 
+                        text="Daily Activities" 
+                        icon="sap-icon://activity-items" 
+                        key="activities"
+                        select="onNavigationSelect"/>
+                    
+                    <tnt:NavigationListItem 
+                        text="AI Assistant" 
+                        icon="sap-icon://discussion-2" 
+                        key="aiAssistant"
+                        select="onNavigationSelect"
+                        expanded="true">
+                        <tnt:NavigationListItem 
+                            text="Chat" 
+                            key="chat"
+                            select="onNavigationSelect"/>
+                        <tnt:NavigationListItem 
+                            text="History" 
+                            key="history"
+                            select="onNavigationSelect"/>
+                    </tnt:NavigationListItem>
+                    
+                    <tnt:NavigationListItem 
+                        text="Analytics" 
+                        icon="sap-icon://bar-chart" 
+                        key="analytics"
+                        select="onNavigationSelect"/>
+                    
+                    <tnt:NavigationListItem 
+                        text="Settings" 
+                        icon="sap-icon://action-settings" 
+                        key="settings"
+                        select="onNavigationSelect"/>
+                </tnt:NavigationList>
+                
+                <tnt:fixedItem>
+                    <tnt:NavigationList>
+                        <tnt:NavigationListItem 
+                            text="Upcoming" 
+                            icon="sap-icon://warning" 
+                            key="upcoming"/>
+                        <tnt:NavigationListItem 
+                            text="Settings" 
+                            icon="sap-icon://action-settings" 
+                            key="globalSettings"/>
+                    </tnt:NavigationList>
+                </tnt:fixedItem>
+            </tnt:SideNavigation>
+        </tnt:sideContent>
+        
+        <!-- Main Content -->
+        <tnt:mainContents>
+            <NavContainer id="mainNavContainer" height="100%">
+                
+                <!-- Daily Activities View -->
+                <Page id="dailyActivitiesPage" title="Daily Activities" showNavButton="false">
+                    <content>
+                        <VBox class="sapUiMediumMargin">
+
+                            <!-- Activities Table -->
+                            <Panel headerText="Daily Activities" class="sapUiLargeMarginBottom">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <Title text="Daily Activities" level="H2"/>
+                                        <ToolbarSpacer/>
+                                        <Button icon="sap-icon://add"
+                                                tooltip="Add Activity"
+                                                type="Transparent"
+                                                press="onAddActivity"/>
+                                        <Button icon="sap-icon://refresh"
+                                                tooltip="Refresh"
+                                                type="Transparent"
+                                                press="onRefreshActivities"/>
+                                    </Toolbar>
+                                </headerToolbar>
+
+                                <content>
+                                    <Table id="mainActivitiesTable"
+                                           items="{activities>/activities}"
+                                           mode="SingleSelect"
+                                           class="sapUiMediumMargin">
+
+                                        <columns>
+                                            <Column><Text text="Activity"/></Column>
+                                            <Column><Text text="Category"/></Column>
+                                            <Column><Text text="Priority"/></Column>
+                                            <Column><Text text="Status"/></Column>
+                                            <Column><Text text="Date"/></Column>
+                                            <Column><Text text="Time (min)"/></Column>
+                                            <Column><Text text="Actions"/></Column>
+                                        </columns>
+
+                                        <items>
+                                            <ColumnListItem press="onActivityPress">
+                                                <cells>
+                                                    <VBox>
+                                                        <Text text="{activities>title}" class="sapUiMediumText"/>
+                                                        <Text text="{activities>description}" class="sapUiSmallText"/>
+                                                    </VBox>
+                                                    <Text text="{activities>category}"/>
+                                                    <ObjectStatus text="{activities>priority}"
+                                                                 state="{path: 'activities>priority', formatter: '.formatPriorityState'}"/>
+                                                    <ObjectStatus text="{activities>status}"
+                                                                 state="{path: 'activities>status', formatter: '.formatStatusState'}"/>
+                                                    <Text text="{activities>date}"/>
+                                                    <Text text="{activities>timeMinutes}"/>
+                                                    <HBox>
+                                                        <Button icon="sap-icon://edit" type="Transparent" tooltip="Edit"/>
+                                                        <Button icon="sap-icon://delete" type="Transparent" tooltip="Delete"/>
+                                                    </HBox>
+                                                </cells>
+                                            </ColumnListItem>
+                                        </items>
+                                    </Table>
+                                </content>
+                            </Panel>
+
+                            <!-- Activity Statistics -->
+                            <Panel headerText="Activity Statistics">
+                                <content>
+                                    <HBox class="sapUiMediumMargin" justifyContent="SpaceAround">
+                                        <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                            <core:Icon src="sap-icon://activity-items" size="2.5rem" color="#0070f2"/>
+                                            <Title text="5" level="H2" class="sapUiSmallMarginTop"/>
+                                            <Text text="Total Activities" class="sapUiSmallText"/>
+                                        </VBox>
+                                        <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                            <core:Icon src="sap-icon://complete" size="2.5rem" color="#30914c"/>
+                                            <Title text="2" level="H2" class="sapUiSmallMarginTop"/>
+                                            <Text text="Completed" class="sapUiSmallText"/>
+                                        </VBox>
+                                        <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                            <core:Icon src="sap-icon://pending" size="2.5rem" color="#e9730c"/>
+                                            <Title text="2" level="H2" class="sapUiSmallMarginTop"/>
+                                            <Text text="In Progress" class="sapUiSmallText"/>
+                                        </VBox>
+                                        <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                            <core:Icon src="sap-icon://time-entry-request" size="2.5rem" color="#5d36ff"/>
+                                            <Title text="360" level="H2" class="sapUiSmallMarginTop"/>
+                                            <Text text="Total Minutes" class="sapUiSmallText"/>
+                                        </VBox>
+                                    </HBox>
+                                </content>
+                            </Panel>
+
+                        </VBox>
+                    </content>
+                </Page>
+
+                <!-- AI Assistant Main View -->
+                <Page id="aiAssistantPage" title="AI Assistant" showNavButton="false">
+                    <content>
+                        <VBox height="100%" class="sapUiNoMargin">
+                            
+                            <!-- AI Chat Header -->
+                            <Panel class="sapUiNoMargin" backgroundDesign="Solid">
+                                <content>
+                                    <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiMediumMargin">
+                                        <VBox>
+                                            <Title text="AI Assistant" level="H2"/>
+                                            <Text text="Your intelligent onboarding companion"/>
+                                        </VBox>
+                                        <HBox>
+                                            <Button text="Clear Chat" 
+                                                    icon="sap-icon://clear-all" 
+                                                    type="Transparent" 
+                                                    press="onClearChat"/>
+                                            <Button text="Export Chat" 
+                                                    icon="sap-icon://download" 
+                                                    type="Transparent" 
+                                                    press="onExportChat"/>
+                                        </HBox>
+                                    </HBox>
+                                </content>
+                            </Panel>
+                            
+                            <!-- Chat Messages Area -->
+                            <ScrollContainer id="chatScrollContainer" 
+                                           height="100%" 
+                                           vertical="true" 
+                                           class="sapUiContentPadding">
+                                
+                                <!-- Welcome Message -->
+                                <Panel class="sapUiMediumMarginBottom" backgroundDesign="Translucent">
+                                    <content>
+                                        <HBox alignItems="Center" class="sapUiMediumMargin">
+                                            <f:Avatar src="sap-icon://discussion-2" 
+                                                     displaySize="M" 
+                                                     backgroundColor="Accent1"
+                                                     class="sapUiMediumMarginEnd"/>
+                                            <VBox>
+                                                <Text text="👋 Welcome to your AI Assistant!" class="sapUiMediumText"/>
+                                                <Text text="I'm here to help with your onboarding journey. Ask me about policies, tasks, or any questions you have!" class="sapUiSmallText"/>
+                                            </VBox>
+                                        </HBox>
+                                    </content>
+                                </Panel>
+                                
+                                <!-- Dynamic Chat Messages -->
+                                <VBox id="chatMessagesContainer">
+                                    <!-- Messages will be added dynamically -->
+                                </VBox>
+                                
+                            </ScrollContainer>
+                            
+                            <!-- Chat Input Area -->
+                            <Panel class="sapUiNoMargin" backgroundDesign="Solid">
+                                <content>
+                                    <HBox alignItems="End" class="sapUiMediumMargin">
+                                        <VBox width="100%" class="sapUiSmallMarginEnd">
+                                            <Label text="Ask me anything about your internship:"/>
+                                            <TextArea id="messageInput" 
+                                                     value="{/newMessage}"
+                                                     placeholder="Type your message here... (Press Ctrl+Enter to send)"
+                                                     rows="2"
+                                                     width="100%"
+                                                     maxLength="500"/>
+                                        </VBox>
+                                        <VBox>
+                                            <Button id="sendButton" 
+                                                    text="Send" 
+                                                    icon="sap-icon://paper-plane"
+                                                    type="Emphasized" 
+                                                    press="onSendMessage"
+                                                    enabled="{= ${/newMessage}.length > 0}"/>
+                                            <Text text="{= 500 - ${/newMessage}.length} chars" 
+                                                  class="sapUiTinyText sapUiTinyMarginTop"/>
+                                        </VBox>
+                                    </HBox>
+                                    
+                                    <!-- Quick Action Buttons -->
+                                    <HBox class="sapUiMediumMargin sapUiMediumMarginTop" wrap="Wrap">
+                                        <Button text="📋 Company Policies" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                        <Button text="📚 Training Info" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                        <Button text="✅ My Tasks" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                        <Button text="🏠 Remote Work" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                        <Button text="🔒 Security Guidelines" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                        <Button text="❓ Get Help" 
+                                                type="Transparent" 
+                                                press="onQuickAction"
+                                                class="sapUiTinyMarginEnd sapUiTinyMarginBottom"/>
+                                    </HBox>
+                                </content>
+                            </Panel>
+                            
+                        </VBox>
+                    </content>
+                </Page>
+                
+            </NavContainer>
+        </tnt:mainContents>
+        
+    </tnt:ToolPage>
+    
+</mvc:View>

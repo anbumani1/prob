@@ -34,6 +34,8 @@
         "sap.ui.core": {},
         "sap.m": {},
         "sap.ui.layout": {},
+        "sap.f": {},
+        "sap.tnt": {},
         "sap.ushell": {},
         "sap.collaboration": {},
         "sap.ui.comp": {},
@@ -110,6 +112,11 @@
         "name": "RouteTasks",
         "pattern": "tasks",
         "target": ["TargetShell", "TargetTasks"]
+      },
+      {
+        "name": "RouteMainApp",
+        "pattern": "main",
+        "target": ["TargetMainApp"]
       }
     ],
     "targets": {
@@ -162,6 +169,15 @@
         "viewId": "Tasks",
         "viewName": "Tasks",
         "parent": "TargetShell"
+      },
+      "TargetMainApp": {
+        "viewType": "XML",
+        "transition": "slide",
+        "clearControlAggregation": true,
+        "viewId": "MainApp",
+        "viewName": "MainApp",
+        "controlId": "app",
+        "controlAggregation": "pages"
       }
     }
   }

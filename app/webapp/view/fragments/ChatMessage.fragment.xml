@@ -1,0 +1,36 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f">
+    
+    <!-- User Message -->
+    <VBox visible="{= ${type} === 'user'}" class="chat-message-user">
+        <HBox alignItems="Center" justifyContent="End">
+            <VBox class="sapUiSmallMarginEnd">
+                <Text text="{text}" class="sapUiMediumText"/>
+                <Text text="{path: 'timestamp', formatter: '.formatTimestamp'}" 
+                      class="chat-timestamp" 
+                      textAlign="End"/>
+            </VBox>
+            <f:Avatar displaySize="S" 
+                     initials="{chat>/currentUser}" 
+                     backgroundColor="Accent2"/>
+        </HBox>
+    </VBox>
+    
+    <!-- Bot Message -->
+    <VBox visible="{= ${type} === 'bot'}" class="chat-message-bot">
+        <HBox alignItems="Center">
+            <f:Avatar src="sap-icon://discussion-2" 
+                     displaySize="S" 
+                     backgroundColor="Accent1"
+                     class="sapUiSmallMarginEnd"/>
+            <VBox>
+                <Text text="{text}" class="sapUiMediumText"/>
+                <Text text="{path: 'timestamp', formatter: '.formatTimestamp'}" 
+                      class="chat-timestamp"/>
+            </VBox>
+        </HBox>
+    </VBox>
+    
+</core:FragmentDefinition>

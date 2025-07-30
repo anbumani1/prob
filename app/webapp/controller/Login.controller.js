@@ -38,8 +38,8 @@ sap.ui.define([
                 sessionStorage.setItem("isLoggedIn", "true");
                 sessionStorage.setItem("username", sUsername);
                 
-                // Navigate to welcome page
-                this.getRouter().navTo("RouteWelcome");
+                // Navigate to main app
+                this.getRouter().navTo("RouteMainApp");
                 
                 MessageToast.show("Login successful!");
             } else {

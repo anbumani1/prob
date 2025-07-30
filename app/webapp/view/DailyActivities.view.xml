@@ -1,0 +1,189 @@
+<mvc:View
+    controllerName="intern.portal.controller.DailyActivities"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    displayBlock="true">
+    
+    <Page title="Daily Activities" showNavButton="false">
+        <content>
+            <VBox class="sapUiMediumMargin">
+                
+                <!-- Activities Table -->
+                <Panel headerText="Daily Activities" class="sapUiLargeMarginBottom">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Daily Activities" level="H2"/>
+                            <ToolbarSpacer/>
+                            <Button icon="sap-icon://add" 
+                                    tooltip="Add Activity" 
+                                    type="Transparent"
+                                    press="onAddActivity"/>
+                            <Button icon="sap-icon://refresh" 
+                                    tooltip="Refresh" 
+                                    type="Transparent"
+                                    press="onRefresh"/>
+                        </Toolbar>
+                    </headerToolbar>
+                    
+                    <content>
+                        <Table id="activitiesTable" 
+                               items="{activities>/activities}"
+                               mode="SingleSelect"
+                               class="sapUiMediumMargin">
+                            
+                            <columns>
+                                <Column>
+                                    <Text text="Activity"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Category"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Priority"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Status"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Date"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Time (min)"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Actions"/>
+                                </Column>
+                            </columns>
+                            
+                            <items>
+                                <ColumnListItem press="onActivityPress">
+                                    <cells>
+                                        <!-- Activity -->
+                                        <VBox>
+                                            <Text text="{activities>title}" class="sapUiMediumText"/>
+                                            <Text text="{activities>description}" class="sapUiSmallText"/>
+                                        </VBox>
+                                        
+                                        <!-- Category -->
+                                        <Text text="{activities>category}"/>
+                                        
+                                        <!-- Priority -->
+                                        <ObjectStatus text="{activities>priority}"
+                                                     state="{path: 'activities>priority', formatter: '.formatPriorityState'}"/>
+                                        
+                                        <!-- Status -->
+                                        <ObjectStatus text="{activities>status}"
+                                                     state="{path: 'activities>status', formatter: '.formatStatusState'}"/>
+                                        
+                                        <!-- Date -->
+                                        <Text text="{path: 'activities>date', type: 'sap.ui.model.odata.type.Date'}"/>
+                                        
+                                        <!-- Time -->
+                                        <Text text="{activities>timeMinutes}"/>
+                                        
+                                        <!-- Actions -->
+                                        <HBox>
+                                            <Button icon="sap-icon://edit" 
+                                                    type="Transparent" 
+                                                    tooltip="Edit"
+                                                    press="onEditActivity"/>
+                                            <Button icon="sap-icon://delete" 
+                                                    type="Transparent" 
+                                                    tooltip="Delete"
+                                                    press="onDeleteActivity"/>
+                                        </HBox>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </content>
+                </Panel>
+                
+                <!-- Activity Statistics -->
+                <Panel headerText="Activity Statistics" class="sapUiLargeMarginBottom">
+                    <content>
+                        <HBox class="sapUiMediumMargin" justifyContent="SpaceAround">
+                            
+                            <!-- Total Activities -->
+                            <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                <core:Icon src="sap-icon://activity-items" size="2.5rem" color="#0070f2"/>
+                                <Title text="{activities>/stats/total}" level="H2" class="sapUiSmallMarginTop"/>
+                                <Text text="Total Activities" class="sapUiSmallText"/>
+                            </VBox>
+                            
+                            <!-- Completed -->
+                            <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                <core:Icon src="sap-icon://complete" size="2.5rem" color="#30914c"/>
+                                <Title text="{activities>/stats/completed}" level="H2" class="sapUiSmallMarginTop"/>
+                                <Text text="Completed" class="sapUiSmallText"/>
+                            </VBox>
+                            
+                            <!-- In Progress -->
+                            <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                <core:Icon src="sap-icon://pending" size="2.5rem" color="#e9730c"/>
+                                <Title text="{activities>/stats/inProgress}" level="H2" class="sapUiSmallMarginTop"/>
+                                <Text text="In Progress" class="sapUiSmallText"/>
+                            </VBox>
+                            
+                            <!-- Total Minutes -->
+                            <VBox alignItems="Center" class="intern-portal-card sapUiMediumPadding">
+                                <core:Icon src="sap-icon://time-entry-request" size="2.5rem" color="#5d36ff"/>
+                                <Title text="{activities>/stats/totalMinutes}" level="H2" class="sapUiSmallMarginTop"/>
+                                <Text text="Total Minutes" class="sapUiSmallText"/>
+                            </VBox>
+                            
+                        </HBox>
+                    </content>
+                </Panel>
+                
+                <!-- Progress Chart -->
+                <Panel headerText="Weekly Progress" class="sapUiLargeMarginBottom">
+                    <content>
+                        <VBox class="sapUiMediumMargin">
+                            <HBox alignItems="Center" justifyContent="SpaceBetween" class="sapUiMediumMarginBottom">
+                                <Text text="This week's activity completion rate"/>
+                                <Text text="85% Complete" class="sapUiMediumText"/>
+                            </HBox>
+                            <ProgressIndicator percentValue="85" 
+                                             width="100%" 
+                                             state="Success"
+                                             displayValue="85%"/>
+                        </VBox>
+                    </content>
+                </Panel>
+                
+                <!-- Quick Actions -->
+                <Panel headerText="Quick Actions">
+                    <content>
+                        <HBox class="sapUiMediumMargin" wrap="Wrap">
+                            <Button text="Add Training Activity" 
+                                    icon="sap-icon://learning-assistant" 
+                                    type="Emphasized"
+                                    press="onQuickAddTraining"
+                                    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                            <Button text="Schedule Meeting" 
+                                    icon="sap-icon://appointment-2" 
+                                    type="Default"
+                                    press="onScheduleMeeting"
+                                    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                            <Button text="Export Activities" 
+                                    icon="sap-icon://download" 
+                                    type="Default"
+                                    press="onExportActivities"
+                                    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                            <Button text="View Calendar" 
+                                    icon="sap-icon://calendar" 
+                                    type="Default"
+                                    press="onViewCalendar"
+                                    class="sapUiSmallMarginEnd sapUiSmallMarginBottom"/>
+                        </HBox>
+                    </content>
+                </Panel>
+                
+            </VBox>
+        </content>
+    </Page>
+    
+</mvc:View>
