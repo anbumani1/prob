@@ -49,8 +49,12 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
+# Environment variables (IMPORTANT: Keep this secure!)
 .env
+.env.local
+.env.development
+.env.test
+.env.production
 
 # parcel-bundler cache
 .cache

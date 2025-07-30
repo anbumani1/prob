@@ -3,13 +3,20 @@
   "version": "1.0.0",
   "scripts": {
     "start": "cds watch",
+    "start:env": "node server-with-env.js",
+    "start:basic": "node basic-ai-server.js",
+    "start:simple": "node simple-server.js",
     "build": "cds build",
-    "deploy": "cds deploy"
+    "deploy": "cds deploy",
+    "dev": "NODE_ENV=development node server-with-env.js",
+    "prod": "NODE_ENV=production node server-with-env.js",
+    "health": "curl http://localhost:4004/health"
   },
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/cds-dk": "^8",
-    "axios": "^1.11.0"
+    "axios": "^1.11.0",
+    "dotenv": "^17.2.1"
   },
   "devDependencies": {
     "@sap/cds-dk": "^8"
