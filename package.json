@@ -7,18 +7,23 @@
     "start:basic": "node basic-ai-server.js",
     "start:simple": "node simple-server.js",
     "start:cds": "cds watch",
+    "start:db": "node database-server.js",
     "build": "echo 'Backend-only setup - no build needed'",
-    "deploy": "echo 'Backend-only setup - no deployment needed'",
+    "deploy": "cds deploy",
     "dev": "NODE_ENV=development node server-with-env.js",
     "prod": "NODE_ENV=production node server-with-env.js",
     "health": "curl http://localhost:4004/health",
-    "test": "curl -X POST -H 'Content-Type: application/json' -d '{\"message\":\"Test API\"}' http://localhost:4004/api/chat"
+    "health:db": "curl http://localhost:4005/health",
+    "db:stats": "curl http://localhost:4005/db/stats",
+    "test": "curl -X POST -H 'Content-Type: application/json' -d '{\"message\":\"Test API\"}' http://localhost:4004/api/chat",
+    "test:db": "curl http://localhost:4005/odata/v4/OnboardingService/CompanyPolicy"
   },
   "dependencies": {
     "@sap/cds": "^8",
     "@sap/cds-dk": "^8",
     "axios": "^1.11.0",
-    "dotenv": "^17.2.1"
+    "dotenv": "^17.2.1",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@sap/cds-dk": "^8"
