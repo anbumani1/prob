@@ -1,6 +1,6 @@
-# Intern Portal - Full Stack Application
+# Intern Onboarding Portal - Backend API
 
-A comprehensive intern onboarding portal built with SAP CAP (Cloud Application Programming Model) and Fiori freestyle UI5.
+A powerful AI-powered backend API for intern onboarding applications. This Node.js backend provides intelligent chat capabilities, company policy management, and comprehensive onboarding data services.
 
 ## Project Structure
 
